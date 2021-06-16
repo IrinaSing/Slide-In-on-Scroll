@@ -238,6 +238,28 @@
           if (callNow) func.apply(context, args);
         };
       }
+
+      const sliderImages = document.querySelectorAll(".slide-in");
+
+      function checkSlide(e) {
+        sliderImages.forEach((sliderImage) => {
+          // the image should slide in half way through it's height
+          const slideInAt =
+            window.scrollY + window.innerHeight - sliderImage.height / 2;
+          // bottom of the image
+          const imageBottom = sliderImage.offsetTop + sliderImage.height;
+          const isHalfShown = slideInAt > sliderImage.offsetTop;
+          const isNotScrolledPast = window.scrollY < imageBottom;
+          if (isHalfShown && isNotScrolledPast) {
+            sliderImage.classList.add("active");
+          } else {
+            sliderImage.classList.remove("active");
+          }
+        });
+      }
+
+      // when window is scrolled, it calls the function
+      window.addEventListener("scroll", debounce(checkSlide));
     </script>
     <script type="module" src="./src/init/index.js"></script>
   </body>
